@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": "./public/",
+    "noImplicitAny": true,
+    "module": "es6",
+    "lib": ["ES2019", "DOM"],
+    "target": "es5",
+    "jsx": "react",
+    "allowJs": true
+  },
+  "include": ["./src/**/*"]
+}
