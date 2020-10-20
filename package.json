@@ -19,6 +19,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.8",
+    "@types/classnames": "^2.2.10",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
     "babel-jest": "^26.6.0",
@@ -37,9 +38,14 @@
     "webpack-dev-server": "^3.11.0"
   },
   "jest": {
-    "setupFilesAfterEnv": ["./setupTests.js"]
+    "setupFilesAfterEnv": [
+      "./setupTests.js"
+    ]
   },
   "dependencies": {
+    "classnames": "^2.2.6",
+    "dompurify": "^2.1.1",
+    "marked": "^1.2.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0"
   }
