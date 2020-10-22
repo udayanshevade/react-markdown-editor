@@ -21,6 +21,7 @@ describe('Editor container', () => {
     expect(container.querySelector('em')).toBeInTheDocument();
     expect(container.querySelector('strong')).toBeInTheDocument();
     expect(container.querySelector('code')).toBeInTheDocument();
+    expect(container.querySelector('pre')).toBeInTheDocument();
     expect(container.querySelector('blockquote')).toBeInTheDocument();
     expect(screen.getByRole('img')).toBeInTheDocument();
   });

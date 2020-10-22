@@ -71,6 +71,17 @@
   height: auto;
 }
 
+.editor-preview pre {
+  padding: 1rem 0 1rem 1rem;
+  width: 100%;
+  max-width: 50rem;
+  background: #efefef;
+}
+
+.editor-preview pre code {
+  background: none;
+}
+
 .editor-preview code {
   font-family: monospace;
   background: #efefef;

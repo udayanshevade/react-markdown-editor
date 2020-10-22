@@ -11,6 +11,10 @@ Handles all the usual features of [markdown](https://guides.github.com/features/
 - **bold**
 - \`inline code\`
 
+\`\`\`
+Blocks of code
+\`\`\`
+
 >Block quotes
 
 And of course images:
