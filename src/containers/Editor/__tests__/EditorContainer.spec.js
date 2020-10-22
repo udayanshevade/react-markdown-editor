@@ -21,6 +21,7 @@ describe('Editor container', () => {
     expect(container.querySelector('h1')).toBeInTheDocument();
     expect(container.querySelector('h2')).toBeInTheDocument();
     expect(container.querySelector('p')).toBeInTheDocument();
+    expect(container.querySelector('ol')).toBeInTheDocument();
     expect(container.querySelector('ul')).toBeInTheDocument();
     expect(container.querySelector('li')).toBeInTheDocument();
     expect(container.querySelector('em')).toBeInTheDocument();
