@@ -13,14 +13,13 @@ export const Editor = ({
   name?: string;
   value: string;
   handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-}) => {
-  return (
-    <textarea
-      id={id}
-      className={classnames('editor', className)}
-      name={name}
-      value={value}
-      onChange={handleChange}
-    />
-  );
-};
+}) => (
+  <textarea
+    id={id}
+    className={classnames('editor', className)}
+    name={name}
+    autoFocus
+    value={value}
+    onChange={handleChange}
+  />
+);

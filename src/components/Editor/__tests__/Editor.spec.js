@@ -4,14 +4,19 @@ import userEvent from '@testing-library/user-event';
 import { Editor } from '../index';
 
 describe('Editor component', () => {
-  const onChange = jest.fn();
+  const handleChange = jest.fn();
   beforeEach(() => {
-    onChange.mockClear();
+    handleChange.mockClear();
   });
 
   it('renders correctly', () => {
     render(
-      <Editor id="editor" name="editor" value="foo" onChange={onChange} />
+      <Editor
+        id="editor"
+        name="editor"
+        value="foo"
+        handleChange={handleChange}
+      />
     );
     const editor = screen.getByRole('textbox');
     expect(editor).toBeInTheDocument();
