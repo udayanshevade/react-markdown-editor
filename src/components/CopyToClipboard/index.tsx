@@ -19,8 +19,8 @@ export const CopyToClipboard = ({
   copiedText,
   handleClick,
 }: {
-  id?: string;
-  target?: string;
+  id: string;
+  target: string;
   name?: string;
   className?: string;
   text: string;
@@ -48,7 +48,7 @@ export const CopyToClipboard = ({
       onClick={handleClick}
       disabled={success}
     >
-      {success ? copiedText : text}
+      {success && copiedText ? copiedText : text}
     </button>
   );
 };
