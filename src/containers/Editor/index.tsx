@@ -28,11 +28,12 @@ export const EditorContainer = () => {
     <main className="editor-container">
       <Editor
         id="editor"
+        className="preview-editor"
         name="editor"
         value={value}
         handleChange={handleChange}
       />
-      <Preview id="preview" content={markdown} />
+      <Preview id="preview" className="editor-preview" content={markdown} />
     </main>
   );
 };
