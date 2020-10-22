@@ -54,6 +54,31 @@ describe('Editor container', () => {
     });
   });
 
+  it('shows a placeholder if taking longer than expected', async () => {
+    jest.useFakeTimers();
+    jest.setTimeout(6000);
+
+    const worker = new Worker();
+    const defaultPostMessage = worker.postMessage;
+    worker.postMessage = jest.fn().mockImplementation((data) => {
+      // just delay the existing functionality by 500ms
+      setTimeout(() => {
+        defaultPostMessage(data);
+      }, 500);
+    });
+    getMarkedWorker.mockImplementationOnce(() => worker);
+
+    render(<EditorContainer />);
+    const promise = screen.findByRole('alert', {}, { timeout: 300 });
+    jest.advanceTimersByTime(600);
+    const alert = await promise;
+    expect(alert).toBeInTheDocument();
+    expect(alert).toHaveTextContent('Loading preview...');
+    jest.advanceTimersByTime(5000);
+
+    expect(worker.terminate).not.toHaveBeenCalled();
+  });
+
   describe('handles errors', () => {
     it('if the conversion takes too long', async () => {
       jest.useFakeTimers();
@@ -65,9 +90,11 @@ describe('Editor container', () => {
 
       render(<EditorContainer />);
       const promise = screen.findByRole('alert', {}, { timeout: 5000 });
-      const alert = await promise;
       jest.advanceTimersByTime(5000);
+      const alert = await promise;
+      expect(worker.terminate).toHaveBeenCalled();
       expect(alert).toBeInTheDocument();
+      expect(alert).toHaveTextContent('There was an error');
 
       jest.clearAllTimers();
     });

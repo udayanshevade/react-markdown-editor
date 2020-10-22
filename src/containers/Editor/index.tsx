@@ -13,6 +13,14 @@ const conversionTimeout: {
   id: null,
 };
 
+const loadingTimeout: {
+  duration: number;
+  id: ReturnType<typeof setTimeout>;
+} = {
+  duration: 200,
+  id: null,
+};
+
 const defaultOptions = {
   breaks: true,
   gfm: true,
@@ -24,6 +32,7 @@ export const EditorContainer = () => {
   const [value, setValue] = React.useState(defaultValue);
   const [markdown, setMarkdown] = React.useState('');
   const [error, setError] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   // TODO: enable changing options
   const [options] = React.useState(defaultOptions);
   const workerRef = React.useRef(getMarkedWorker());
@@ -35,20 +44,35 @@ export const EditorContainer = () => {
   };
 
   React.useEffect(() => {
+    if (!workerRef.current) {
+      setError(true);
+      return;
+    }
+
     workerRef.current.onmessage = ({ data }: { data: string }) => {
       clearTimeout(conversionTimeout.id);
+      clearTimeout(loadingTimeout.id);
       setMarkdown(data);
+      if (error) setError(false);
+      if (loading) setError(false);
     };
   }, []);
 
   React.useEffect(() => {
     clearTimeout(conversionTimeout.id);
+    clearTimeout(loadingTimeout.id);
+
     workerRef.current.postMessage({ value, options });
 
     conversionTimeout.id = setTimeout(() => {
       workerRef.current.terminate();
+      setLoading(false);
       setError(true);
     }, conversionTimeout.duration);
+
+    loadingTimeout.id = setTimeout(() => {
+      setLoading(true);
+    }, loadingTimeout.duration);
   }, [value, options]);
 
   return (
@@ -62,15 +86,19 @@ export const EditorContainer = () => {
           handleChange={handleChange}
         />
       </section>
-      {error ? (
-        <div role="alert" className="editor-error">
-          There was an error
-        </div>
-      ) : (
-        <section className="editor-container-inner preview-section">
+      <section className="editor-container-inner preview-section">
+        {loading ? (
+          <div role="alert" className="editor-loading">
+            Loading preview...
+          </div>
+        ) : error ? (
+          <div role="alert" className="editor-error">
+            There was an error
+          </div>
+        ) : (
           <Preview id="preview" className="editor-preview" content={markdown} />
-        </section>
-      )}
+        )}
+      </section>
     </main>
   );
 };
