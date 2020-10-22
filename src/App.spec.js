@@ -5,6 +5,8 @@ import { App } from './App';
 describe('The app', () => {
   it('should render', () => {
     render(<App />);
-    expect(screen.getByText('Hello world!')).toBeInTheDocument();
+    expect(screen.getByRole('main')).toBeInTheDocument();
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
+    expect(screen.getByRole('document')).toBeInTheDocument();
   });
 });
