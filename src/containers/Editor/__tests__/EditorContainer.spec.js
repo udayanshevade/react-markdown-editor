@@ -2,6 +2,11 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { EditorContainer } from '../';
 import userEvent from '@testing-library/user-event';
+jest.mock('../../../webWorkers/markdown/getWorker');
+import {
+  Worker,
+  getMarkedWorker,
+} from '../../../webWorkers/markdown/getWorker';
 
 describe('Editor container', () => {
   it('renders correctly', () => {
@@ -46,6 +51,25 @@ describe('Editor container', () => {
       const heading = screen.getByRole('heading');
       expect(heading).toBeInTheDocument();
       expect(heading).toHaveTextContent('Hello world');
+    });
+  });
+
+  describe('handles errors', () => {
+    it('if the conversion takes too long', async () => {
+      jest.useFakeTimers();
+      jest.setTimeout(6000);
+
+      const worker = new Worker();
+      worker.postMessage = jest.fn();
+      getMarkedWorker.mockImplementationOnce(() => worker);
+
+      render(<EditorContainer />);
+      const promise = screen.findByRole('alert', {}, { timeout: 5000 });
+      const alert = await promise;
+      jest.advanceTimersByTime(5000);
+      expect(alert).toBeInTheDocument();
+
+      jest.clearAllTimers();
     });
   });
 });

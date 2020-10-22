@@ -37,6 +37,10 @@ module.exports = {
           transpileOnly: true,
         },
       },
+      {
+        test: /\.worker\.js$/,
+        use: { loader: 'worker-loader' },
+      },
       { test: /\.js$/, loader: 'source-map-loader' },
       {
         test: /\.css$/,
