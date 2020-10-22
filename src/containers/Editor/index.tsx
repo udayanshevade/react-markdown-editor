@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Editor } from '../../components/Editor/index';
 import { Preview } from '../../components/Preview/index';
+import ClipboardJS from 'clipboard';
+import { CopyToClipboard } from '../../components/CopyToClipboard/index';
 import { getMarkedWorker } from '../../webWorkers/markdown/getWorker';
 import { defaultValue } from './defaultValue';
 import './editor-container.css';
@@ -85,6 +87,15 @@ export const EditorContainer = () => {
           value={value}
           handleChange={handleChange}
         />
+        {ClipboardJS.isSupported() && (
+          <CopyToClipboard
+            id="editorCopy"
+            className="editor-copy"
+            target="#editor"
+            text="copy"
+            copiedText="copied!"
+          />
+        )}
       </section>
       <section className="editor-container-inner preview-section">
         {loading ? (

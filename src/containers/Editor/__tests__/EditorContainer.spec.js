@@ -1,18 +1,25 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { EditorContainer } from '../';
 import userEvent from '@testing-library/user-event';
+import { EditorContainer } from '../';
 jest.mock('../../../webWorkers/markdown/getWorker');
 import {
   Worker,
   getMarkedWorker,
 } from '../../../webWorkers/markdown/getWorker';
+jest.mock('clipboard');
+import Clipboard from 'clipboard';
 
 describe('Editor container', () => {
+  beforeAll(() => {
+    Clipboard.isSupported.mockReturnValue(true);
+  });
+
   it('renders correctly', () => {
     render(<EditorContainer />);
     expect(screen.getByRole('main')).toBeInTheDocument();
     expect(screen.getByRole('textbox')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'copy' })).toBeInTheDocument();
     expect(screen.getByRole('document')).toBeInTheDocument();
   });
 
@@ -99,5 +106,14 @@ describe('Editor container', () => {
 
       jest.clearAllTimers();
     });
+  });
+
+  it('hides the copy button if not supported', () => {
+    Clipboard.isSupported.mockReturnValue(false);
+    render(<EditorContainer />);
+    expect(
+      screen.queryByRole('button', { name: 'copy' })
+    ).not.toBeInTheDocument();
+    Clipboard.isSupported.mockReturnValue(true);
   });
 });

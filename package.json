@@ -20,6 +20,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.8",
     "@types/classnames": "^2.2.10",
+    "@types/clipboard": "^2.0.1",
     "@types/marked": "^1.1.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
@@ -51,6 +52,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.6",
+    "clipboard": "^2.0.6",
     "dompurify": "^2.1.1",
     "marked": "^1.2.2",
     "react": "^16.14.0",
