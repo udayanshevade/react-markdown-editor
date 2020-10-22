@@ -21,12 +21,17 @@ describe('Editor component', () => {
   });
 
   it('processes user interaction', () => {
-    const onChange = jest.fn();
+    const handleChange = jest.fn();
     render(
-      <Editor id="editor" name="editor" value="foo" onChange={onChange} />
+      <Editor
+        id="editor"
+        name="editor"
+        value="foo"
+        handleChange={handleChange}
+      />
     );
     const editor = screen.getByRole('textbox');
     userEvent.type(editor, 'hello,{enter}world!');
-    expect(onChange).toHaveBeenCalled();
+    expect(handleChange).toHaveBeenCalled();
   });
 });

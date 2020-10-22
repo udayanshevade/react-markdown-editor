@@ -6,13 +6,13 @@ export const Editor = ({
   className,
   name,
   value,
-  onChange,
+  handleChange,
 }: {
   id?: string;
   className?: string;
   name?: string;
   value: string;
-  onChange: (e: React.ChangeEvent) => void;
+  handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }) => {
   return (
     <textarea
@@ -20,7 +20,7 @@ export const Editor = ({
       className={classnames('editor', className)}
       name={name}
       value={value}
-      onChange={onChange}
+      onChange={handleChange}
     />
   );
 };
